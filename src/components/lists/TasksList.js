@@ -19,6 +19,11 @@ import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import {SectionAPI} from "../../http/api/admin/SectionAPI";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import {DeleteDialog} from "../dialogs/DeleteDialog";
+import FiberNewIcon from '@material-ui/icons/FiberNew';
+import LabelIcon from '@material-ui/icons/Label';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import LabelOffIcon from '@material-ui/icons/LabelOff';
+import {sortArrayByKey} from "../../helpers";
 
 
 export const TasksList = (props) => {
@@ -87,15 +92,20 @@ export const TasksList = (props) => {
             <br />
             <Divider />
             <List component="nav">
-                {tasks.map((t) => {
-                    return <ListItem button key={t.id}
+                {sortArrayByKey(tasks, "task_type_id").map((t) => {
+                    return <ListItem button key={t.id} className={classes[t["task_type"]["name"]]}
                                      onClick={() => history.push({
                                              pathname: `/view/${subject.id}/${section.id}/${t.id}`,
                                              state: {subject: subject, section: section, task: t},
                                          }
                                      )}>
                         <ListItemIcon>
-                            <InboxIcon />
+                            {t["task_type_id"] === 1 ?
+                                <FiberNewIcon /> : t["task_type_id"] === 2 ?
+                                    <LabelIcon /> : t["task_type_id"] === 3 ?
+                                        <LabelImportantIcon /> : t["task_type_id"] === 4 ?
+                                            <LabelOffIcon /> : <InboxIcon />
+                            }
                         </ListItemIcon>
                         <ListItemText primary={t.name} />
                         <ListItemSecondaryAction>
@@ -105,6 +115,12 @@ export const TasksList = (props) => {
                 })}
             </List>
             <Divider />
+            <br />
+            <Typography variant="body2" color="textSecondary" component="p">
+                {section.description.split('\n').map((text, index) => {
+                    return <span key={index}>{text}<br /></span>})
+                } <br />
+            </Typography>
         </div>
     );
 }
@@ -115,4 +131,18 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 500,
         backgroundColor: theme.palette.background.paper,
     },
+    suggestion : {
+        backgroundColor: "#f3f3f3",
+    },
+    task: {
+        backgroundColor: "white",
+    },
+    homework: {
+        backgroundColor: "#edffff",
+    },
+    rejected: {
+        opacity: 0.4,
+        textDecoration: "line-through",
+        backgroundColor: "white",
+    }
 }));

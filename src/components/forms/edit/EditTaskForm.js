@@ -15,6 +15,7 @@ import TextField from "@material-ui/core/TextField";
 import Slider from "@material-ui/core/Slider";
 import {SectionAPI} from "../../../http/api/admin/SectionAPI";
 import {quillToolbarOptions} from "../../../helpers";
+import {TaskTypeAPI} from "../../../http/api/admin/TaskTypeAPI";
 
 export const EditTaskForm = (props) => {
     const classes = useStyles;
@@ -30,9 +31,11 @@ export const EditTaskForm = (props) => {
     let [subjectID, setSubjectID] = useState(null);
     let [sectionID, setSectionID] = useState(null);
     let [taskID, setTaskID] = useState(null);
+    let [taskTypeID, setTaskTypeID] = useState(null);
 
     let [subjects, setSubjects] = React.useState([]);
     let [sections, setSections] = React.useState([]);
+    let [taskTypes, setTaskTypes] = React.useState([]);
 
     useEffect(() => {
         async function fetchSubject(id) {
@@ -73,6 +76,7 @@ export const EditTaskForm = (props) => {
                         setSolution(t.solution);
                         setAuthor(t.author);
                         setDifficulty(t.difficulty);
+                        setTaskTypeID(t.task_type_id);
                     });
                 });
             });
@@ -86,6 +90,7 @@ export const EditTaskForm = (props) => {
             setSolution(props.location.state.task.solution);
             setAuthor(props.location.state.task.author);
             setDifficulty(props.location.state.task.difficulty);
+            setTaskTypeID(props.location.state.task.task_type_id);
         }
 
         setSectionsBySubjectID(subjectID);
@@ -101,10 +106,20 @@ export const EditTaskForm = (props) => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        async function fetchData() {
+            const api = new TaskTypeAPI();
+            let response = await api.GetAllTaskTypes();
+            setTaskTypes(response);
+        }
+
+        fetchData();
+    }, []);
+
     const updateTask = async (event) => {
         event.preventDefault();
         const api = new TaskAPI();
-        await api.UpdateTask(taskID, name, description, solution, author, difficulty, sectionID);
+        await api.UpdateTask(taskID, name, description, solution, author, difficulty, sectionID, taskTypeID);
         history.push(`/view/${subjectID}/${sectionID}/${taskID}`);
     }
 
@@ -131,7 +146,7 @@ export const EditTaskForm = (props) => {
                         name="name"
                         value={name}
                         onChange={event => setName(event.target.value)}
-                        style={{width: 400}}
+                        style={{maxWidth: 400}}
                     />
                     <TextField
                         required
@@ -140,7 +155,7 @@ export const EditTaskForm = (props) => {
                         id="author"
                         value={author}
                         onChange={event => setAuthor(event.target.value)}
-                        style={{width: 400}}
+                        style={{maxWidth: 400}}
                     />
                 </FormControl>
                 <br />
@@ -189,7 +204,7 @@ export const EditTaskForm = (props) => {
                     marks
                     min={1}
                     max={10}
-                    style={{width: 400}}
+                    style={{maxWidth: 400}}
                 />
                 <br /><br />
                 <Typography>
@@ -203,6 +218,23 @@ export const EditTaskForm = (props) => {
                 </Typography>
                 <ReactQuill theme="snow" modules={quillToolbarOptions} style={{maxWidth: "740px"}}
                             value={solution} onChange={setSolution}/>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="select-task-type-label">Tag</InputLabel>
+                    <Select
+                        required
+                        labelId="select-task-type-label"
+                        id="select-task-type"
+                        style={{width: 200}}
+                        value={taskTypeID}
+                        className={classes.selectEmpty}
+                        onChange={event => setTaskTypeID(event.target.value)}
+                    >
+                        {taskTypes.map((s, i) => {
+                            return <MenuItem key={i} value={s.id}>{s.name}</MenuItem>
+                        })}
+                    </Select>
+                </FormControl>
+                <br />
                 <Button
                     style={{marginTop: 30}}
                     type="submit"

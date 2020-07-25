@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
 import {SectionAPI} from "../../http/api/admin/SectionAPI";
 
 import history from "../../history";
@@ -18,6 +17,7 @@ import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Link from "@material-ui/core/Link";
 import {DeleteDialog} from "../dialogs/DeleteDialog";
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 
 export const SectionsList = (props) => {
@@ -79,7 +79,7 @@ export const SectionsList = (props) => {
                                          }
                                      )}>
                         <ListItemIcon>
-                            <InboxIcon />
+                            <FolderOpenIcon />
                         </ListItemIcon>
                         <ListItemText primary={s.name} />
                         <ListItemSecondaryAction>
@@ -89,6 +89,21 @@ export const SectionsList = (props) => {
                 })}
             </List>
             <Divider />
+            <br />
+            <Typography variant="body2" color="textSecondary" component="p">
+                {subject.description.split('\n').map((text, index) => {
+                    return <span key={index}>{text}<br /></span>})
+                } <br />
+                <Divider />
+                <br />
+                Преподаватели:
+                <ul>
+                {subject.teachers === null ? '' :
+                    subject.teachers.split('\n').map((text, index) => {
+                    return <li key={index}>{text}</li>})
+                }
+                </ul>
+            </Typography>
         </div>
     );
 }

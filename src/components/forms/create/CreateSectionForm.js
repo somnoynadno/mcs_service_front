@@ -62,7 +62,7 @@ export const CreateSectionForm = () => {
                     </Select>
                 </FormControl>
                 <br />
-                <FormControl>
+                <FormControl fullWidth style={{maxWidth: 450}}>
                 <TextField
                     required
                     id="name"
@@ -100,7 +100,7 @@ export const CreateSectionForm = () => {
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 150,
+        minWidth: 200,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),

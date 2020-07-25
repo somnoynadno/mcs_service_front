@@ -70,7 +70,7 @@ export const CreateTaskForm = () => {
                         name="name"
                         value={name}
                         onChange={event => setName(event.target.value)}
-                        style={{width: 400}}
+                        style={{maxWidth: 400}}
                     />
                     <TextField
                         required
@@ -79,7 +79,7 @@ export const CreateTaskForm = () => {
                         id="author"
                         value={author}
                         onChange={event => setAuthor(event.target.value)}
-                        style={{width: 400}}
+                        style={{maxWidth: 400}}
                     />
                 </FormControl>
                 <br />
@@ -128,7 +128,7 @@ export const CreateTaskForm = () => {
                     marks
                     min={1}
                     max={10}
-                    style={{width: 400}}
+                    style={{maxWidth: 400}}
                 />
                 <br /><br />
                 <Typography>

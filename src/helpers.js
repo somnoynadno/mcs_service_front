@@ -19,3 +19,11 @@ export const quillToolbarOptions = {
         ['image'], ['clean']                              // remove formatting button
     ]
 };
+
+// simple sort function
+export function sortArrayByKey(array, key) {
+    return array.sort(function(a, b) {
+        let x = a[key]; let y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}

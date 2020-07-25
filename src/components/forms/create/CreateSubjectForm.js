@@ -11,11 +11,12 @@ import FormControl from "@material-ui/core/FormControl";
 export const CreateSubjectForm = () => {
     let [name, setName] = React.useState('');
     let [description, setDescription] = React.useState('');
+    let [teachers, setTeachers] = React.useState('');
 
     const createSubject = async (event) => {
         event.preventDefault();
         const api = new SubjectAPI();
-        let r = await api.CreateSubject(name, description);
+        let r = await api.CreateSubject(name, description, teachers);
         history.push(`/view/${r.id}`);
     }
 
@@ -25,7 +26,7 @@ export const CreateSubjectForm = () => {
                 Новый предмет
             </Typography>
             <form onSubmit={(event => createSubject(event))}>
-                <FormControl>
+                <FormControl fullWidth style={{maxWidth: 500}}>
                     <TextField
                         required
                         id="name"
@@ -40,10 +41,21 @@ export const CreateSubjectForm = () => {
                         name="description"
                         label="Описание"
                         multiline
-                        rowsMax={4}
+                        rowsMax={6}
                         id="description"
                         value={description}
                         onChange={event => setDescription(event.target.value)}
+                    />
+                    <br />
+                    <TextField
+                        required
+                        name="teachers"
+                        label="Преподаватели"
+                        multiline
+                        rowsMax={3}
+                        id="teachers"
+                        value={teachers}
+                        onChange={event => setTeachers(event.target.value)}
                     />
                 </FormControl>
                 <br />

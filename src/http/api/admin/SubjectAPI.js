@@ -23,11 +23,12 @@ export class SubjectAPI {
         });
     }
 
-    CreateSubject(name, description) {
+    CreateSubject(name, description, teachers) {
         return new Promise((resolve) => {
             HTTP.axios.post(`/admin/subject`, {
                 name: name,
                 description: description,
+                teachers: teachers,
             })
                 .then(response => {
                     resolve(response.data);
@@ -37,11 +38,12 @@ export class SubjectAPI {
         });
     }
 
-    UpdateSubject(id, name, description) {
+    UpdateSubject(id, name, description, teachers) {
         return new Promise((resolve) => {
             HTTP.axios.put(`/admin/subject/${id}`, {
                 name: name,
                 description: description,
+                teachers: teachers,
             })
                 .then(response => {
                     resolve(response.data);

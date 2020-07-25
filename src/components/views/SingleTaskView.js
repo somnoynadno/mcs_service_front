@@ -90,7 +90,8 @@ export const SingleTaskView = (props) => {
             <br />
             <Typography variant="body2" color="textSecondary" component="p">
                 Автор: {task.author} <br />
-                Сложность: {task.difficulty}
+                Сложность: {task.difficulty} <br />
+                Tag: {task["task_type"]["name"]}
             </Typography>
             <br />
             <Button size="small" onClick={() =>

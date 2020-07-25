@@ -7,13 +7,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
 import {DeleteDialog} from "../dialogs/DeleteDialog";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 
 export const SubjectsList = () => {
@@ -55,7 +55,7 @@ export const SubjectsList = () => {
                                          }
                                      )}>
                         <ListItemIcon>
-                            <InboxIcon />
+                            <FolderOpenIcon />
                         </ListItemIcon>
                         <ListItemText primary={s.name} />
                         <ListItemSecondaryAction>

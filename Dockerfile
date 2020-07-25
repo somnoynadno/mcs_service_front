@@ -3,7 +3,7 @@ FROM node:carbon-alpine as builder
 LABEL maintainer="Alexander Zorkin"
 
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 RUN npm install --production
 
