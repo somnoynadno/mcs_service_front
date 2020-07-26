@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import history from "../../history";
 
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -6,10 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
 import {TaskAPI} from "../../http/api/admin/TaskAPI";
+import {sortArrayByKey} from "../../helpers";
 
-import history from "../../history";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -23,7 +23,8 @@ import FiberNewIcon from '@material-ui/icons/FiberNew';
 import LabelIcon from '@material-ui/icons/Label';
 import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
-import {sortArrayByKey} from "../../helpers";
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import InboxIcon from '@material-ui/icons/Inbox';
 
 
 export const TasksList = (props) => {
@@ -100,11 +101,12 @@ export const TasksList = (props) => {
                                          }
                                      )}>
                         <ListItemIcon>
-                            {t["task_type_id"] === 1 ?
-                                <FiberNewIcon /> : t["task_type_id"] === 2 ?
-                                    <LabelIcon /> : t["task_type_id"] === 3 ?
-                                        <LabelImportantIcon /> : t["task_type_id"] === 4 ?
-                                            <LabelOffIcon /> : <InboxIcon />
+                            {t["task_type"]["name"] === "suggestion" ?
+                                <FiberNewIcon /> : t["task_type"]["name"] === "task" ?
+                                    <LabelIcon /> : t["task_type"]["name"]=== "homework" ?
+                                        <LabelImportantIcon /> : t["task_type"]["name"] === "rejected" ?
+                                            <LabelOffIcon /> : t["task_type"]["name"] === "control" ?
+                                                <StarBorderIcon /> : <InboxIcon />
                             }
                         </ListItemIcon>
                         <ListItemText primary={t.name} />
@@ -131,11 +133,17 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 500,
         backgroundColor: theme.palette.background.paper,
     },
-    suggestion : {
+    suggestion: {
         backgroundColor: "#f3f3f3",
     },
     task: {
         backgroundColor: "white",
+    },
+    control: {
+        backgroundColor: "#f1f3e3",
+    },
+    additional: {
+        backgroundColor: "#dcecdd"
     },
     homework: {
         backgroundColor: "#edffff",

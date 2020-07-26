@@ -23,6 +23,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CreateIcon from '@material-ui/icons/Create';
 import BookIcon from '@material-ui/icons/Book';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SchoolIcon from '@material-ui/icons/School';
 
 import {SubjectsList} from "../components/lists/SubjectsList";
 import {SectionsList} from "../components/lists/SectionsList";
@@ -32,6 +33,7 @@ import {CreateTaskForm} from "../components/forms/create/CreateTaskForm";
 import {CreateSubjectForm} from "../components/forms/create/CreateSubjectForm";
 import {CreateSectionForm} from "../components/forms/create/CreateSectionForm";
 import {EditTaskForm} from "../components/forms/edit/EditTaskForm";
+
 
 /*
  Главная страница с шапкой и сайдбаром.
@@ -100,12 +102,16 @@ export const IndexPage = () => {
                 <Divider />
                 <List>
                     <ListItem button key={"Новый предмет"} onClick={() => history.push('/new_subject')}>
-                        <ListItemIcon>{ <BookIcon />}</ListItemIcon>
+                        <ListItemIcon>{ <SchoolIcon />}</ListItemIcon>
                         <ListItemText primary={"Новый предмет"} />
                     </ListItem>
                     <ListItem button key={"Новый раздел"} onClick={() => history.push('/new_section')}>
                         <ListItemIcon>{ <BookmarkIcon />}</ListItemIcon>
                         <ListItemText primary={"Новый раздел"} />
+                    </ListItem>
+                    <ListItem button key={"Новый материал"} onClick={() => console.log("TODO")}>
+                        <ListItemIcon>{ <BookIcon />}</ListItemIcon>
+                        <ListItemText primary={"Новый материал"} />
                     </ListItem>
                     <ListItem button key={"Новая задача"} onClick={() => history.push('/new_task')}>
                         <ListItemIcon>{ <CreateIcon />}</ListItemIcon>

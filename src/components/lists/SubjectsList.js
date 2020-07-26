@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import {DeleteDialog} from "../dialogs/DeleteDialog";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import SchoolIcon from '@material-ui/icons/School';
 
 
 export const SubjectsList = () => {
@@ -55,7 +55,7 @@ export const SubjectsList = () => {
                                          }
                                      )}>
                         <ListItemIcon>
-                            <FolderOpenIcon />
+                            <SchoolIcon />
                         </ListItemIcon>
                         <ListItemText primary={s.name} />
                         <ListItemSecondaryAction>
