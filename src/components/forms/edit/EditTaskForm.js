@@ -28,6 +28,7 @@ export const EditTaskForm = (props) => {
     let [difficulty, setDifficulty] = useState(
         props.location.state !== undefined ?
             props.location.state.task.difficulty : 5);
+    let [solutionAuthor, setSolutionAuthor] = useState('');
 
     let [subjectID, setSubjectID] = useState(null);
     let [sectionID, setSectionID] = useState(null);
@@ -78,6 +79,7 @@ export const EditTaskForm = (props) => {
                         setAuthor(t.author);
                         setDifficulty(t.difficulty);
                         setTaskTypeID(t.task_type_id);
+                        setSolutionAuthor(t.solution_author);
                     });
                 });
             });
@@ -92,6 +94,7 @@ export const EditTaskForm = (props) => {
             setAuthor(props.location.state.task.author);
             setDifficulty(props.location.state.task.difficulty);
             setTaskTypeID(props.location.state.task.task_type_id);
+            setSolutionAuthor(props.location.state.task.solution_author);
         }
 
         setSectionsBySubjectID(subjectID);
@@ -120,7 +123,8 @@ export const EditTaskForm = (props) => {
     const updateTask = async (event) => {
         event.preventDefault();
         const api = new TaskAPI();
-        await api.UpdateTask(taskID, name, description, solution, author, difficulty, sectionID, taskTypeID);
+        await api.UpdateTask(taskID, name, description, solution, author,
+            difficulty, sectionID, taskTypeID, solutionAuthor);
         history.push(`/view/${subjectID}/${sectionID}/${taskID}`);
     }
 
@@ -225,6 +229,17 @@ export const EditTaskForm = (props) => {
                 </Typography>
                 <ReactQuill theme="snow" modules={quillToolbarOptions} style={{maxWidth: "740px"}}
                             value={solution} onChange={setSolution}/>
+                <FormControl className={classes.formControl} >
+                    <TextField
+                        name="solutionAuthor"
+                        label="Автор решения"
+                        id="solutionAuthor"
+                        value={solutionAuthor}
+                        onChange={event => setSolutionAuthor(event.target.value)}
+                        style={{maxWidth: 400}}
+                    />
+                </FormControl>
+                <br />
                 <FormControl className={classes.formControl}>
                     <InputLabel id="select-task-type-label">Tag</InputLabel>
                     <Select

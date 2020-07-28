@@ -22,6 +22,7 @@ export const CreateTaskForm = () => {
     let [name, setName] = useState('');
     let [description, setDescription] = useState('');
     let [solution, setSolution] = useState('');
+    let [solutionAuthor, setSolutionAuthor] = useState('');
     let [author, setAuthor] = useState('');
     let [difficulty, setDifficulty] = useState(5);
     let [subjectID, setSubjectID] = useState(null);
@@ -43,7 +44,7 @@ export const CreateTaskForm = () => {
     const createTask = async (event) => {
         event.preventDefault();
         const api = new TaskAPI();
-        let r = await api.CreateTask(name, description, solution, author, difficulty, sectionID);
+        let r = await api.CreateTask(name, description, solution, author, difficulty, sectionID, solutionAuthor);
         history.push(`/view/${subjectID}/${sectionID}/${r.id}`);
     }
 
@@ -142,6 +143,17 @@ export const CreateTaskForm = () => {
                 </Typography>
                 <ReactQuill theme="snow" modules={quillToolbarOptions} style={{maxWidth: "740px"}}
                             value={solution} onChange={setSolution}/>
+                <FormControl className={classes.formControl} >
+                    <TextField
+                        name="solutionAuthor"
+                        label="Автор решения"
+                        id="solutionAuthor"
+                        value={solutionAuthor}
+                        onChange={event => setSolutionAuthor(event.target.value)}
+                        style={{maxWidth: 400}}
+                    />
+                </FormControl>
+                <br />
                 <Button
                     style={{marginTop: 30}}
                     type="submit"
