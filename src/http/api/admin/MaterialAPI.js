@@ -1,9 +1,20 @@
 import {HTTP} from "../../http-common";
 
-export class SectionAPI {
-    GetSectionsBySubjectID(subjectID) {
+export class MaterialAPI {
+    GetMaterialsBySectionID(sectionID) {
         return new Promise((resolve) => {
-            HTTP.axios.get(`/admin/sections_by_subject/${subjectID}`)
+            HTTP.axios.get(`/admin/materials_by_section/${sectionID}`)
+                .then(response => {
+                    resolve(response.data);
+                }).catch(function(error) {
+                    HTTP.handleError(error);
+            });
+        })
+    }
+
+    GetMaterial(id) {
+        return new Promise((resolve) => {
+            HTTP.axios.get(`/admin/material/${id}`)
                 .then(response => {
                     resolve(response.data);
                 }).catch(function(error) {
@@ -12,24 +23,13 @@ export class SectionAPI {
         });
     }
 
-    GetSection(id) {
+    CreateMaterial(name, content, isVisible, sectionID) {
         return new Promise((resolve) => {
-            HTTP.axios.get(`/admin/section/${id}`)
-                .then(response => {
-                    resolve(response.data);
-                }).catch(function(error) {
-                    HTTP.handleError(error);
-            });
-        });
-    }
-
-    CreateSection(name, description, subjectID) {
-        return new Promise((resolve) => {
-            HTTP.axios.post(`/admin/section`, {
+            HTTP.axios.post(`/admin/material`, {
                 name: name,
-                description: description,
-                subject_id: subjectID,
-                section_type_id: 1, // suggestion by default
+                content: content,
+                is_visible: isVisible,
+                section_id: sectionID,
             })
                 .then(response => {
                     resolve(response.data);
@@ -39,13 +39,13 @@ export class SectionAPI {
         });
     }
 
-    UpdateSection(id, name, description, subjectID, sectionTypeID) {
+    UpdateMaterial(id, name, content, isVisible, sectionID) {
         return new Promise((resolve) => {
-            HTTP.axios.put(`/admin/section/${id}`, {
+            HTTP.axios.put(`/admin/material/${id}`, {
                 name: name,
-                description: description,
-                subject_id: subjectID,
-                section_type_id: sectionTypeID,
+                content: content,
+                is_visible: isVisible,
+                section_id: sectionID,
             })
                 .then(response => {
                     resolve(response.data);
@@ -55,9 +55,9 @@ export class SectionAPI {
         });
     }
 
-    DeleteSection(id) {
+    DeleteMaterial(id) {
         return new Promise((resolve) => {
-            HTTP.axios.delete(`/admin/section/${id}`)
+            HTTP.axios.delete(`/admin/material/${id}`)
                 .then(response => {
                     resolve(response.data);
                 }).catch(function(error) {

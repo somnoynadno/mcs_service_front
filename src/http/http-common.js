@@ -2,7 +2,7 @@ import axios from 'axios';
 import {apiAddress} from '../config';
 import history from "../history";
 
-const TIMEOUT = 7000;
+const TIMEOUT = 10000;
 
 /*
  Базовая структура для запросов axios.

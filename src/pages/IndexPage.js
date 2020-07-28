@@ -33,7 +33,8 @@ import {CreateTaskForm} from "../components/forms/create/CreateTaskForm";
 import {CreateSubjectForm} from "../components/forms/create/CreateSubjectForm";
 import {CreateSectionForm} from "../components/forms/create/CreateSectionForm";
 import {EditTaskForm} from "../components/forms/edit/EditTaskForm";
-
+import {CreateMaterialForm} from "../components/forms/create/CreateMaterialForm";
+import {SingleMaterialView} from "../components/views/SingleMaterialView";
 
 /*
  Главная страница с шапкой и сайдбаром.
@@ -109,7 +110,7 @@ export const IndexPage = () => {
                         <ListItemIcon>{ <BookmarkIcon />}</ListItemIcon>
                         <ListItemText primary={"Новый раздел"} />
                     </ListItem>
-                    <ListItem button key={"Новый материал"} onClick={() => console.log("TODO")}>
+                    <ListItem button key={"Новый материал"} onClick={() => history.push('/new_material')}>
                         <ListItemIcon>{ <BookIcon />}</ListItemIcon>
                         <ListItemText primary={"Новый материал"} />
                     </ListItem>
@@ -132,11 +133,14 @@ export const IndexPage = () => {
                 <Route exact path="/new_task" component={CreateTaskForm} />
                 <Route exact path="/new_subject" component={CreateSubjectForm} />
                 <Route exact path="/new_section" component={CreateSectionForm} />
+                <Route exact path="/new_material" component={CreateMaterialForm} />
 
                 <Route exact path="/view" component={SubjectsList} />
                 <Route exact path="/view/:subject_id" component={SectionsList} />
                 <Route exact path="/view/:subject_id/:section_id" component={TasksList} />
                 <Route exact path="/view/:subject_id/:section_id/:task_id" component={SingleTaskView} />
+
+                <Route exact path="/material/:material_id" component={SingleMaterialView} />
 
                 <Route exact path="/edit/:subject_id/:section_id/:task_id" component={EditTaskForm} />
             </main>

@@ -20,6 +20,7 @@ import {DeleteDialog} from "../dialogs/DeleteDialog";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import {sortArrayByKey} from "../../helpers";
 
 
 export const SectionsList = (props) => {
@@ -73,7 +74,7 @@ export const SectionsList = (props) => {
             <br />
             <Divider />
             <List component="nav">
-                {sections.map((s) => {
+                {sortArrayByKey(sections, "section_type_id").map((s) => {
                     return <ListItem button key={s.id} className={s["section_type"]["name"]}
                                      onClick={() => history.push({
                                              pathname: `/view/${subject.id}/${s.id}`,

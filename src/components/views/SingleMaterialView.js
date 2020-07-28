@@ -11,14 +11,15 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Link from "@material-ui/core/Link";
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import {SectionAPI} from "../../http/api/admin/SectionAPI";
-import {TaskAPI} from "../../http/api/admin/TaskAPI";
+import {MaterialAPI} from "../../http/api/admin/MaterialAPI";
 
 
-export const SingleTaskView = (props) => {
+export const SingleMaterialView = (props) => {
     const classes = useStyles();
+
     let [subject, setSubject] = React.useState(null);
     let [section, setSection] = React.useState(null);
-    let [task, setTask] = React.useState(null);
+    let [material, setMaterial] = React.useState(null);
 
     useEffect(() => {
         async function fetchSubject(id) {
@@ -31,37 +32,37 @@ export const SingleTaskView = (props) => {
             return await api.GetSection(id);
         }
 
-        async function fetchTask(id) {
-            const api = new TaskAPI();
-            return await api.GetTask(id);
+        async function fetchMaterial(id) {
+            const api = new MaterialAPI();
+            return await api.GetMaterial(id);
         }
 
         if (props.location.state === undefined) {
-            let subjectID = window.location.pathname.split('/')[2];
-            let sectionID = window.location.pathname.split('/')[3];
-            let taskID = window.location.pathname.split('/')[4];
+            let materialID = window.location.pathname.split('/')[2];
 
-            fetchSubject(subjectID).then((s) => {
-                setSubject(s);
-                fetchSection(sectionID).then((s) => {
+            fetchMaterial(materialID).then((m) => {
+                setMaterial(m);
+                fetchSection(m.id).then((s) => {
                     setSection(s);
-                    fetchTask(taskID).then((t) => {
-                        setTask(t);
+                    fetchSubject(s.id).then((s) => {
+                        setSubject(s);
                     });
                 });
             });
+
         } else {
             setSubject(props.location.state.subject);
             setSection(props.location.state.section);
-            setTask(props.location.state.task);
+            setMaterial(props.location.state.material);
         }
     }, [props]);
 
-    if (task === null) return <CircularProgress />
+    // await subject
+    if (subject === null) return <CircularProgress />
     else return (
         <div className={classes.root}>
             <Typography variant="h5" component="h1">
-                {task.name}
+                {material.name}
             </Typography>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                 <Link color="inherit" href={"/view"}>
@@ -73,36 +74,24 @@ export const SingleTaskView = (props) => {
                 <Link color="inherit" href={"/view/" + subject.id + "/" + section.id}>
                     {section.name}
                 </Link>
-                <Typography color="textPrimary">{task.name}</Typography>
+                <Typography color="textPrimary">{material.name}</Typography>
             </Breadcrumbs>
             <br />
             <Divider />
-            <Typography variant="body2" component="p">
-                <h3>Описание:</h3>
-                <div dangerouslySetInnerHTML={{__html: task.description}} />
-            </Typography>
-            <Typography variant="body2" component="p">
-                <h3>Решение:</h3>
-                <div dangerouslySetInnerHTML={{__html: task.solution}} />
+            <Typography variant="body1" component="p">
+                <div dangerouslySetInnerHTML={{__html: material.content}} />
             </Typography>
             <br />
             <Divider />
             <br />
             <Typography variant="body2" color="textSecondary" component="p">
-                Автор: {task.author} <br />
-                Сложность: {task.difficulty} <br />
-                Tag: {task["task_type"]["name"]} <br />
-            </Typography>
-            <br />
-            <Divider />
-            <br />
-            <Typography variant="body2" color="textSecondary" component="p">
-                Создано: {(new Date(task["created_at"])).toLocaleString('ru', {
+                Видимый: {material["is_visible"] ? "да" : "нет"} <br /><br />
+                Создано: {(new Date(material["created_at"])).toLocaleString('ru', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
             })} <br />
-                Обновлено: {(new Date(task["updated_at"])).toLocaleString('ru', {
+                Обновлено: {(new Date(material["updated_at"])).toLocaleString('ru', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -111,9 +100,9 @@ export const SingleTaskView = (props) => {
             <br />
             <Button size="small" onClick={() =>
                 history.push({
-                    pathname: `/edit/${subject.id}/${section.id}/${task.id}`,
+                    pathname: `/material/${material.id}/edit`,
                     state: {
-                        task: task,
+                        material: material,
                         section: section,
                         subject: subject
                     },

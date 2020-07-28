@@ -25,6 +25,8 @@ import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import InboxIcon from '@material-ui/icons/Inbox';
+import BookIcon from '@material-ui/icons/Book';
+import {MaterialAPI} from "../../http/api/admin/MaterialAPI";
 
 
 export const TasksList = (props) => {
@@ -33,12 +35,18 @@ export const TasksList = (props) => {
     let [subject, setSubject] = React.useState(null);
     let [section, setSection] = React.useState(null);
     let [tasks, setTasks] = React.useState([]);
+    let [materials, setMaterials] = React.useState([]);
 
     useEffect(() => {
         async function fetchData(s) {
-            const api = new TaskAPI();
-            let response = await api.GetTasksBySectionID(s.id)
-            setTasks(response);
+            const taskAPI = new TaskAPI();
+            const materialAPI = new MaterialAPI();
+
+            let tasks = await taskAPI.GetTasksBySectionID(s.id);
+            setTasks(tasks);
+
+            let materials = await materialAPI.GetMaterialsBySectionID(s.id);
+            setMaterials(materials);
         }
 
         async function fetchSubject(id) {
@@ -72,6 +80,12 @@ export const TasksList = (props) => {
     const deleteTask = async (id) => {
         const api = new TaskAPI();
         await api.DeleteTask(id);
+        window.location.reload();
+    }
+
+    const deleteMaterial = async (id) => {
+        const api = new MaterialAPI();
+        await api.DeleteMaterial(id);
         window.location.reload();
     }
 
@@ -112,6 +126,29 @@ export const TasksList = (props) => {
                         <ListItemText primary={t.name} />
                         <ListItemSecondaryAction>
                             <DeleteDialog deleteCallback={() => deleteTask(t.id)} />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                })}
+            </List>
+            <Divider />
+            <br />
+            <Typography component="h1" variant="h6">
+                Материалы для подготовки
+            </Typography>
+            <List component="nav">
+                {materials.map((m) => {
+                    return <ListItem button key={m.id}
+                                     onClick={() => history.push({
+                                             pathname: `/material/${m.id}`,
+                                             state: {subject: subject, section: section, material: m},
+                                         }
+                                     )}>
+                        <ListItemIcon>
+                            <BookIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={m.name} />
+                        <ListItemSecondaryAction>
+                            <DeleteDialog deleteCallback={() => deleteMaterial(m.id)} />
                         </ListItemSecondaryAction>
                     </ListItem>
                 })}

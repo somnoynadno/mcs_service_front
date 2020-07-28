@@ -34,7 +34,7 @@ export class TaskAPI {
         });
     }
 
-    CreateTask(name, description, solution, author, difficulty, sectionID) {
+    CreateTask(name, description, solution, author, difficulty, sectionID, solutionAuthor) {
         return new Promise((resolve) => {
             HTTP.axios.post(`/admin/task`, {
                 name: name,
@@ -43,7 +43,8 @@ export class TaskAPI {
                 author: author,
                 difficulty: difficulty,
                 section_id: sectionID,
-                task_type_id: 1 // suggestion by default
+                task_type_id: 1, // suggestion by default,
+                solution_author: solutionAuthor
             })
                 .then(response => {
                     resolve(response.data);
@@ -53,7 +54,7 @@ export class TaskAPI {
         });
     }
 
-    UpdateTask(id, name, description, solution, author, difficulty, sectionID, taskTypeID) {
+    UpdateTask(id, name, description, solution, author, difficulty, sectionID, taskTypeID, solutionAuthor) {
         return new Promise((resolve) => {
             HTTP.axios.put(`/admin/task/${id}`, {
                 name: name,
@@ -62,7 +63,8 @@ export class TaskAPI {
                 author: author,
                 difficulty: difficulty,
                 section_id: sectionID,
-                task_type_id: taskTypeID
+                task_type_id: taskTypeID,
+                solution_author: solutionAuthor
             })
                 .then(response => {
                     resolve(response.data);
