@@ -18,7 +18,6 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import {SectionAPI} from "../../http/api/admin/SectionAPI";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import {DeleteDialog} from "../dialogs/DeleteDialog";
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import LabelIcon from '@material-ui/icons/Label';
 import LabelImportantIcon from '@material-ui/icons/LabelImportant';
@@ -27,6 +26,8 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import InboxIcon from '@material-ui/icons/Inbox';
 import BookIcon from '@material-ui/icons/Book';
 import {MaterialAPI} from "../../http/api/admin/MaterialAPI";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 
 
 export const TasksList = (props) => {
@@ -77,18 +78,6 @@ export const TasksList = (props) => {
 
     }, [props]);
 
-    const deleteTask = async (id) => {
-        const api = new TaskAPI();
-        await api.DeleteTask(id);
-        window.location.reload();
-    }
-
-    const deleteMaterial = async (id) => {
-        const api = new MaterialAPI();
-        await api.DeleteMaterial(id);
-        window.location.reload();
-    }
-
     if (section === null) return <CircularProgress />
     else return (
         <div className={classes.root}>
@@ -125,7 +114,10 @@ export const TasksList = (props) => {
                         </ListItemIcon>
                         <ListItemText primary={t.name} />
                         <ListItemSecondaryAction>
-                            <DeleteDialog deleteCallback={() => deleteTask(t.id)} />
+                            <IconButton edge="end" aria-label="delete"
+                                        onClick={() => history.push(`/edit/${subject.id}/${section.id}/${t.id}`)}>
+                                <EditIcon />
+                            </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
                 })}
@@ -148,7 +140,10 @@ export const TasksList = (props) => {
                         </ListItemIcon>
                         <ListItemText primary={m.name} />
                         <ListItemSecondaryAction>
-                            <DeleteDialog deleteCallback={() => deleteMaterial(m.id)} />
+                            <IconButton edge="end" aria-label="delete"
+                                        onClick={() => history.push(`/material/${m.id}/edit`)}>
+                                <EditIcon />
+                            </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
                 })}
@@ -159,6 +154,7 @@ export const TasksList = (props) => {
                 {section.description.split('\n').map((text, index) => {
                     return <span key={index}>{text}<br /></span>})
                 } <br />
+                Tag: {section["section_type"]["name"]}
             </Typography>
         </div>
     );

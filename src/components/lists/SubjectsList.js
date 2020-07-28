@@ -10,10 +10,11 @@ import Divider from '@material-ui/core/Divider';
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
-import {DeleteDialog} from "../dialogs/DeleteDialog";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import SchoolIcon from '@material-ui/icons/School';
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 
 
 export const SubjectsList = () => {
@@ -29,12 +30,6 @@ export const SubjectsList = () => {
 
         fetchData();
     }, []);
-
-    const deleteSubject = async (id) => {
-        const api = new SubjectAPI();
-        await api.DeleteSubject(id);
-        window.location.reload();
-    }
 
     return (
         <div className={classes.root}>
@@ -59,7 +54,10 @@ export const SubjectsList = () => {
                         </ListItemIcon>
                         <ListItemText primary={s.name} />
                         <ListItemSecondaryAction>
-                            <DeleteDialog deleteCallback={() => deleteSubject(s.id)} />
+                            <IconButton edge="end" aria-label="delete"
+                                        onClick={() => history.push(`/edit/${s.id}`)}>
+                                <EditIcon />
+                            </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
                 })}

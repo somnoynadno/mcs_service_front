@@ -17,10 +17,13 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import {MaterialAPI} from "../../../http/api/admin/MaterialAPI";
+import {DeleteDialog} from "../../dialogs/DeleteDialog";
 
-export const CreateMaterialForm = () => {
+
+export const EditMaterialForm = (props) => {
     const classes = useStyles;
 
+    let [materialID, setMaterialID] = useState(null);
     let [name, setName] = useState('');
     let [content, setContent] = useState('');
     let [isVisible, setIsVisible] = useState(true);
@@ -29,6 +32,50 @@ export const CreateMaterialForm = () => {
 
     let [subjects, setSubjects] = React.useState([]);
     let [sections, setSections] = React.useState([]);
+
+    useEffect(() => {
+        async function fetchMaterial(id) {
+            const api = new MaterialAPI();
+            return await api.GetMaterial(id);
+        }
+
+        async function fetchSection(id) {
+            const api = new SectionAPI();
+            return await api.GetSection(id);
+        }
+
+        async function setSectionsBySubjectID(id) {
+            const api = new SectionAPI();
+            let response = await api.GetSectionsBySubjectID(id);
+            setSections(response);
+        }
+
+        if (props.location.state === undefined) {
+            let materialID = window.location.pathname.split('/')[2];
+
+            fetchMaterial(materialID).then((m) => {
+                setMaterialID(m.id);
+                setName(m.name);
+                setContent(m.content);
+                setIsVisible(m.is_visible);
+                setSectionID(m.section_id);
+
+                fetchSection(m.section_id).then((s) => {
+                    let subjectID = s.subject_id;
+                    setSubjectID(subjectID);
+                    setSectionsBySubjectID(subjectID);
+                })
+            });
+        } else {
+            setSubjectID(props.location.state.subject.id);
+            setSectionID(props.location.state.section.id);
+            setMaterialID(props.location.state.material.id);
+            setName(props.location.state.material.name);
+            setContent(props.location.state.material.content);
+            setIsVisible(props.location.state.material.is_visible);
+            setSectionsBySubjectID(props.location.state.subject.id);
+        }
+        }, [props])
 
     useEffect(() => {
         async function fetchData() {
@@ -40,11 +87,17 @@ export const CreateMaterialForm = () => {
         fetchData();
     }, []);
 
-    const createMaterial = async (event) => {
+    const updateMaterial = async (event) => {
         event.preventDefault();
         const api = new MaterialAPI();
-        let r = await api.CreateMaterial(name, content, isVisible, sectionID);
-        history.push(`/material/${r.id}`);
+        await api.UpdateMaterial(materialID, name, content, isVisible, sectionID);
+        history.push(`/material/${materialID}`);
+    }
+
+    const deleteMaterial = async () => {
+        const api = new MaterialAPI();
+        await api.DeleteMaterial(materialID);
+        history.push(`/view/${subjectID}/${sectionID}`);
     }
 
     const handleSubjectChange = async (event) => {
@@ -58,9 +111,9 @@ export const CreateMaterialForm = () => {
     return (
         <div>
             <Typography component="h1" variant="h5">
-                Новый материал для подготовки
+                Редактирование материала
             </Typography>
-            <form onSubmit={(event => createMaterial(event))}>
+            <form onSubmit={(event => updateMaterial(event))}>
                 <FormControl className={classes.formControl}>
                     <br />
                     <TextField
@@ -125,8 +178,10 @@ export const CreateMaterialForm = () => {
                     variant="contained"
                     color="primary"
                 >
-                    Создать
+                    Сохранить
                 </Button>
+                <br /><br />
+                <DeleteDialog deleteCallback={() => deleteMaterial()} />
             </form>
         </div>
     );
@@ -141,4 +196,3 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     },
 }));
-

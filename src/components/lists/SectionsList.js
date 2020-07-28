@@ -16,11 +16,13 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Link from "@material-ui/core/Link";
-import {DeleteDialog} from "../dialogs/DeleteDialog";
+import CancelIcon from '@material-ui/icons/Cancel';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import EditIcon from '@material-ui/icons/Edit';
 import {sortArrayByKey} from "../../helpers";
+import IconButton from "@material-ui/core/IconButton";
 
 
 export const SectionsList = (props) => {
@@ -53,12 +55,6 @@ export const SectionsList = (props) => {
 
     }, [props]);
 
-    const deleteSection = async (id) => {
-        const api = new SectionAPI();
-        await api.DeleteSection(id);
-        window.location.reload();
-    }
-
     if (subject === null) return <CircularProgress />
     else return (
         <div className={classes.root}>
@@ -75,7 +71,7 @@ export const SectionsList = (props) => {
             <Divider />
             <List component="nav">
                 {sortArrayByKey(sections, "section_type_id").map((s) => {
-                    return <ListItem button key={s.id} className={s["section_type"]["name"]}
+                    return <ListItem button key={s.id} className={classes[s["section_type"]["name"]]}
                                      onClick={() => history.push({
                                              pathname: `/view/${subject.id}/${s.id}`,
                                              state: {subject: subject, section: s},
@@ -85,12 +81,16 @@ export const SectionsList = (props) => {
                             {s["section_type"]["name"] === "main" ?
                                 <BookmarkIcon /> : s["section_type"]["name"] === "experimental" ?
                                     <BookmarkBorderIcon /> : s["section_type"]["name"] === "suggestion" ?
-                                        <ErrorOutlineIcon /> : <BookmarkIcon />
+                                        <ErrorOutlineIcon /> : s["section_type"]["name"] === "rejected" ?
+                                            <CancelIcon /> : <BookmarkIcon />
                             }
                         </ListItemIcon>
                         <ListItemText primary={s.name} />
                         <ListItemSecondaryAction>
-                            <DeleteDialog deleteCallback={() => deleteSection(s.id)} />
+                            <IconButton edge="end" aria-label="delete"
+                                        onClick={() => history.push(`/edit/${subject.id}/${s.id}`)}>
+                                <EditIcon />
+                            </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
                 })}

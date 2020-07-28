@@ -16,6 +16,7 @@ import Slider from "@material-ui/core/Slider";
 import {SectionAPI} from "../../../http/api/admin/SectionAPI";
 import {quillToolbarOptions} from "../../../helpers";
 import {TaskTypeAPI} from "../../../http/api/admin/TaskTypeAPI";
+import {DeleteDialog} from "../../dialogs/DeleteDialog";
 
 export const EditTaskForm = (props) => {
     const classes = useStyles;
@@ -121,6 +122,12 @@ export const EditTaskForm = (props) => {
         const api = new TaskAPI();
         await api.UpdateTask(taskID, name, description, solution, author, difficulty, sectionID, taskTypeID);
         history.push(`/view/${subjectID}/${sectionID}/${taskID}`);
+    }
+
+    const deleteTask = async () => {
+        const api = new TaskAPI();
+        await api.DeleteTask(taskID);
+        history.push(`/view/${subjectID}/${sectionID}`);
     }
 
     const handleSubjectChange = async (event) => {
@@ -243,6 +250,8 @@ export const EditTaskForm = (props) => {
                 >
                     Сохранить
                 </Button>
+                <br /><br />
+                <DeleteDialog deleteCallback={() => deleteTask()} />
             </form>
         </div>
     );

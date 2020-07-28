@@ -42,9 +42,9 @@ export const SingleMaterialView = (props) => {
 
             fetchMaterial(materialID).then((m) => {
                 setMaterial(m);
-                fetchSection(m.id).then((s) => {
+                fetchSection(m.section_id).then((s) => {
                     setSection(s);
-                    fetchSubject(s.id).then((s) => {
+                    fetchSubject(s.subject_id).then((s) => {
                         setSubject(s);
                     });
                 });

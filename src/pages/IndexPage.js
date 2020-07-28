@@ -35,6 +35,9 @@ import {CreateSectionForm} from "../components/forms/create/CreateSectionForm";
 import {EditTaskForm} from "../components/forms/edit/EditTaskForm";
 import {CreateMaterialForm} from "../components/forms/create/CreateMaterialForm";
 import {SingleMaterialView} from "../components/views/SingleMaterialView";
+import {EditSubjectForm} from "../components/forms/edit/EditSubjectForm";
+import {EditSectionForm} from "../components/forms/edit/EditSectionForm";
+import {EditMaterialForm} from "../components/forms/edit/EditMaterialForm";
 
 /*
  Главная страница с шапкой и сайдбаром.
@@ -129,7 +132,12 @@ export const IndexPage = () => {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                {/*Nested routing*/}
+                {/*
+                Nested routing goes here
+
+                WARNING: any changes in routes can cause
+                preload errors in related components
+                */}
                 <Route exact path="/new_task" component={CreateTaskForm} />
                 <Route exact path="/new_subject" component={CreateSubjectForm} />
                 <Route exact path="/new_section" component={CreateSectionForm} />
@@ -141,7 +149,10 @@ export const IndexPage = () => {
                 <Route exact path="/view/:subject_id/:section_id/:task_id" component={SingleTaskView} />
 
                 <Route exact path="/material/:material_id" component={SingleMaterialView} />
+                <Route exact path="/material/:material_id/edit" component={EditMaterialForm} />
 
+                <Route exact path="/edit/:subject_id" component={EditSubjectForm} />
+                <Route exact path="/edit/:subject_id/:section_id" component={EditSectionForm} />
                 <Route exact path="/edit/:subject_id/:section_id/:task_id" component={EditTaskForm} />
             </main>
         </div>
