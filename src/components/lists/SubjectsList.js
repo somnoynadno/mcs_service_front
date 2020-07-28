@@ -70,7 +70,7 @@ export const SubjectsList = () => {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 450,
+        maxWidth: 500,
         backgroundColor: theme.palette.background.paper,
     },
 }));

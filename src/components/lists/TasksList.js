@@ -163,7 +163,7 @@ export const TasksList = (props) => {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 500,
+        maxWidth: 620,
         backgroundColor: theme.palette.background.paper,
     },
     suggestion: {

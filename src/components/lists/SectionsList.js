@@ -118,17 +118,17 @@ export const SectionsList = (props) => {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 450,
+        maxWidth: 550,
         backgroundColor: theme.palette.background.paper,
     },
     suggestion: {
-        backgroundColor: "#f3f3f3",
+        backgroundColor: "#f6f5f8",
     },
     main: {
         backgroundColor: "white",
     },
     experimental: {
-        backgroundColor: "#eae1d9"
+        backgroundColor: "#f8f8f5"
     },
     rejected: {
         opacity: 0.4,
