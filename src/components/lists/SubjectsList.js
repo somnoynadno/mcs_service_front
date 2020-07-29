@@ -15,6 +15,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import SchoolIcon from '@material-ui/icons/School';
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
+import {StatsView} from "../views/StatsView";
 
 
 export const SubjectsList = () => {
@@ -62,7 +63,8 @@ export const SubjectsList = () => {
                     </ListItem>
                 })}
             </List>
-            <Divider />
+            <Divider /><br />
+            <StatsView />
         </div>
     );
 }
