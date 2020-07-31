@@ -24,7 +24,9 @@ export const CreateTaskForm = () => {
     let [solution, setSolution] = useState('');
     let [solutionAuthor, setSolutionAuthor] = useState('');
     let [author, setAuthor] = useState('');
+    let [notes, setNotes] = useState('');
     let [difficulty, setDifficulty] = useState(5);
+
     let [subjectID, setSubjectID] = useState(null);
     let [sectionID, setSectionID] = useState(null);
 
@@ -44,7 +46,8 @@ export const CreateTaskForm = () => {
     const createTask = async (event) => {
         event.preventDefault();
         const api = new TaskAPI();
-        let r = await api.CreateTask(name, description, solution, author, difficulty, sectionID, solutionAuthor);
+        let r = await api.CreateTask(name, description, solution,
+            author, difficulty, sectionID, solutionAuthor, notes);
         history.push(`/view/${subjectID}/${sectionID}/${r.id}`);
     }
 
@@ -150,6 +153,15 @@ export const CreateTaskForm = () => {
                         id="solutionAuthor"
                         value={solutionAuthor}
                         onChange={event => setSolutionAuthor(event.target.value)}
+                        style={{maxWidth: 400}}
+                    />
+                    <TextField
+                        name="notes"
+                        label="Примечания"
+                        id="notes"
+                        value={notes}
+                        multiline
+                        onChange={event => setNotes(event.target.value)}
                         style={{maxWidth: 400}}
                     />
                 </FormControl>

@@ -77,13 +77,22 @@ export const SingleTaskView = (props) => {
             </Breadcrumbs>
             <br />
             <Divider />
-            <Typography variant="body2" component="p">
+            <Typography variant="body1" component="p">
                 <h3>Описание:</h3>
                 <div dangerouslySetInnerHTML={{__html: task.description}} />
             </Typography>
-            <Typography variant="body2" component="p">
+            <Typography variant="body1" component="p">
                 <h3>Решение:</h3>
                 <div dangerouslySetInnerHTML={{__html: task.solution}} />
+            </Typography>
+            <Typography variant="body2" component="p">
+                <h4>Примечания:</h4>
+                <ul>
+                {task.notes === null ? '' :
+                    task.notes.split('\n').map((text, index) => {
+                        return <li key={index}>{text}</li>})
+                }
+                </ul>
             </Typography>
             <br />
             <Divider />

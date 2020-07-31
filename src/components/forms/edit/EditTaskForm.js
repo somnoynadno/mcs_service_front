@@ -29,6 +29,7 @@ export const EditTaskForm = (props) => {
         props.location.state !== undefined ?
             props.location.state.task.difficulty : 5);
     let [solutionAuthor, setSolutionAuthor] = useState('');
+    let [notes, setNotes] = useState('');
 
     let [subjectID, setSubjectID] = useState(null);
     let [sectionID, setSectionID] = useState(null);
@@ -80,6 +81,7 @@ export const EditTaskForm = (props) => {
                         setDifficulty(t.difficulty);
                         setTaskTypeID(t.task_type_id);
                         setSolutionAuthor(t.solution_author);
+                        setNotes(t.notes);
                     });
                 });
             });
@@ -95,6 +97,7 @@ export const EditTaskForm = (props) => {
             setDifficulty(props.location.state.task.difficulty);
             setTaskTypeID(props.location.state.task.task_type_id);
             setSolutionAuthor(props.location.state.task.solution_author);
+            setNotes(props.location.state.task.notes);
         }
 
         setSectionsBySubjectID(subjectID);
@@ -124,7 +127,7 @@ export const EditTaskForm = (props) => {
         event.preventDefault();
         const api = new TaskAPI();
         await api.UpdateTask(taskID, name, description, solution, author,
-            difficulty, sectionID, taskTypeID, solutionAuthor);
+            difficulty, sectionID, taskTypeID, solutionAuthor, notes);
         history.push(`/view/${subjectID}/${sectionID}/${taskID}`);
     }
 
@@ -236,6 +239,15 @@ export const EditTaskForm = (props) => {
                         id="solutionAuthor"
                         value={solutionAuthor}
                         onChange={event => setSolutionAuthor(event.target.value)}
+                        style={{maxWidth: 400}}
+                    />
+                    <TextField
+                        name="notes"
+                        label="Примечания"
+                        id="notes"
+                        value={notes}
+                        multiline
+                        onChange={event => setNotes(event.target.value)}
                         style={{maxWidth: 400}}
                     />
                 </FormControl>
