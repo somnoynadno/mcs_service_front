@@ -27,8 +27,8 @@ import SchoolIcon from '@material-ui/icons/School';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 
 import {SubjectsList} from "../components/lists/SubjectsList";
-import {SectionsList} from "../components/lists/SectionsList";
-import {TasksList} from "../components/lists/TasksList";
+import {SectionsAndLessonsList} from "../components/lists/SectionsAndLessonsList";
+import {TasksAndMaterialsList} from "../components/lists/TasksAndMaterialsList";
 import {SingleTaskView} from "../components/views/SingleTaskView";
 import {CreateTaskForm} from "../components/forms/create/CreateTaskForm";
 import {CreateSubjectForm} from "../components/forms/create/CreateSubjectForm";
@@ -40,6 +40,7 @@ import {EditSubjectForm} from "../components/forms/edit/EditSubjectForm";
 import {EditSectionForm} from "../components/forms/edit/EditSectionForm";
 import {EditMaterialForm} from "../components/forms/edit/EditMaterialForm";
 import {CreateLessonForm} from "../components/forms/create/CreateLessonForm";
+import {SingleLessonView} from "../components/views/SingleLessonView";
 
 /*
  Главная страница с шапкой и сайдбаром.
@@ -151,14 +152,14 @@ export const IndexPage = () => {
                 <Route exact path="/new_lesson" component={CreateLessonForm} />
 
                 <Route exact path="/view" component={SubjectsList} />
-                <Route exact path="/view/:subject_id" component={SectionsList} />
-                <Route exact path="/view/:subject_id/:section_id" component={TasksList} />
+                <Route exact path="/view/:subject_id" component={SectionsAndLessonsList} />
+                <Route exact path="/view/:subject_id/:section_id" component={TasksAndMaterialsList} />
                 <Route exact path="/view/:subject_id/:section_id/:task_id" component={SingleTaskView} />
 
                 <Route exact path="/material/:material_id" component={SingleMaterialView} />
                 <Route exact path="/material/:material_id/edit" component={EditMaterialForm} />
 
-                <Route exact path="/lesson/:lesson_id" component={null} />
+                <Route exact path="/lesson/:lesson_id" component={SingleLessonView} />
                 <Route exact path="/lesson/:lesson_id/add_tasks" component={null} />
                 <Route exact path="/lesson/:lesson_id/edit" component={null} />
 

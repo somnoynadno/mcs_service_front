@@ -12,6 +12,7 @@ import Link from "@material-ui/core/Link";
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import {SectionAPI} from "../../http/api/admin/SectionAPI";
 import {MaterialAPI} from "../../http/api/admin/MaterialAPI";
+import moment from "moment";
 
 
 export const SingleMaterialView = (props) => {
@@ -86,16 +87,8 @@ export const SingleMaterialView = (props) => {
             <br />
             <Typography variant="body2" color="textSecondary" component="p">
                 Видимый: {material["is_visible"] ? "да" : "нет"} <br /><br />
-                Создано: {(new Date(material["created_at"])).toLocaleString('ru', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            })} <br />
-                Обновлено: {(new Date(material["updated_at"])).toLocaleString('ru', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            })} <br />
+                Создано: {moment(material["created_at"]).format('LLL')} <br />
+                Обновлено: {moment(material["updated_at"]).format('LLL')} <br />
             </Typography>
             <br />
             <Button size="small" onClick={() =>

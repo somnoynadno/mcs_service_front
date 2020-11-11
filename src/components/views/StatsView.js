@@ -30,6 +30,9 @@ export const StatsView = (props) => {
             <Typography variant="overline" display="block" gutterBottom>
                 {stats["materials_count"]} материалов опубликовано
             </Typography>
+            <Typography variant="overline" display="block" gutterBottom>
+                {stats["lessons_count"]} классных занятий
+            </Typography>
         </div>
     );
 }

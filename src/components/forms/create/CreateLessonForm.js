@@ -22,11 +22,6 @@ import {
     DateTimePicker,
 } from '@material-ui/pickers';
 
-import moment from "moment";
-import 'moment/locale/ru';
-
-moment.locale("ru");
-
 export const CreateLessonForm = () => {
     const classes = useStyles;
 

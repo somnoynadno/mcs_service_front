@@ -9,6 +9,11 @@ import {IndexPage} from "./pages/IndexPage";
 import {LoginPage} from "./pages/LoginPage";
 import {ErrorPage} from "./pages/ErrorPage";
 
+import moment from "moment";
+import 'moment/locale/ru';
+
+moment.locale("ru");
+
 const App = () => {
   return (
       <Switch>

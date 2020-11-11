@@ -30,7 +30,7 @@ import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 
 
-export const TasksList = (props) => {
+export const TasksAndMaterialsList = (props) => {
     const classes = useStyles();
 
     let [subject, setSubject] = React.useState(null);

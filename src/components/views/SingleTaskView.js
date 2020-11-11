@@ -12,6 +12,7 @@ import Link from "@material-ui/core/Link";
 import {SubjectAPI} from "../../http/api/admin/SubjectAPI";
 import {SectionAPI} from "../../http/api/admin/SectionAPI";
 import {TaskAPI} from "../../http/api/admin/TaskAPI";
+import moment from "moment";
 
 
 export const SingleTaskView = (props) => {
@@ -107,16 +108,8 @@ export const SingleTaskView = (props) => {
             <Divider />
             <br />
             <Typography variant="body2" color="textSecondary" component="p">
-                Создано: {(new Date(task["created_at"])).toLocaleString('ru', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            })} <br />
-                Обновлено: {(new Date(task["updated_at"])).toLocaleString('ru', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            })} <br />
+                Создано: {moment(task["created_at"]).format('LLL')} <br />
+                Обновлено: {moment(task["updated_at"]).format('LLL')} <br />
             </Typography>
             <br />
             <Button size="small" onClick={() =>

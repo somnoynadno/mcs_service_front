@@ -23,18 +23,25 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import EditIcon from '@material-ui/icons/Edit';
 import {sortArrayByKey} from "../../helpers";
 import IconButton from "@material-ui/core/IconButton";
+import {LessonAPI} from "../../http/api/admin/LessonAPI";
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
-export const SectionsList = (props) => {
+export const SectionsAndLessonsList = (props) => {
     const classes = useStyles();
     let [subject, setSubject] = React.useState(null);
     let [sections, setSections] = React.useState([]);
+    let [lessons, setLessons] = React.useState([]);
 
     useEffect(() => {
         async function fetchData(s) {
-            const api = new SectionAPI();
-            let response = await api.GetSectionsBySubjectID(s.id);
-            setSections(response);
+            const sectionAPI = new SectionAPI();
+            let r = await sectionAPI.GetSectionsBySubjectID(s.id);
+            setSections(r);
+
+            const lessonAPI = new LessonAPI();
+            let l = await lessonAPI.GetLessonsBySubjectID(s.id);
+            setLessons(l);
         }
 
         async function fetchSubject(id) {
@@ -92,6 +99,25 @@ export const SectionsList = (props) => {
                                 <EditIcon />
                             </IconButton>
                         </ListItemSecondaryAction>
+                    </ListItem>
+                })}
+            </List>
+            <Divider />
+            <br />
+            <Typography component="h1" variant="h6">
+                Занятия предмета
+            </Typography>
+            <List>
+                {lessons.map((l, i) => {
+                    return <ListItem key={i} button onClick={() => history.push({
+                            pathname: `/lesson/${l.id}`,
+                            state: {subject: subject, lesson: l},
+                        }
+                    )}>
+                        <ListItemIcon>
+                            <ArrowForwardIosIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={l.name} />
                     </ListItem>
                 })}
             </List>
