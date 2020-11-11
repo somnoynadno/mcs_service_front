@@ -24,6 +24,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import BookIcon from '@material-ui/icons/Book';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SchoolIcon from '@material-ui/icons/School';
+import WidgetsIcon from '@material-ui/icons/Widgets';
 
 import {SubjectsList} from "../components/lists/SubjectsList";
 import {SectionsList} from "../components/lists/SectionsList";
@@ -121,6 +122,10 @@ export const IndexPage = () => {
                         <ListItemIcon>{ <CreateIcon />}</ListItemIcon>
                         <ListItemText primary={"Новая задача"} />
                     </ListItem>
+                    <ListItem button key={"Новое занятие"} onClick={() => history.push('/new_lesson')}>
+                        <ListItemIcon>{ <WidgetsIcon />}</ListItemIcon>
+                        <ListItemText primary={"Новое занятие"} />
+                    </ListItem>
                 </List>
                 <Divider />
                 <List>
@@ -142,6 +147,7 @@ export const IndexPage = () => {
                 <Route exact path="/new_subject" component={CreateSubjectForm} />
                 <Route exact path="/new_section" component={CreateSectionForm} />
                 <Route exact path="/new_material" component={CreateMaterialForm} />
+                <Route exact path="/new_lesson" component={null} />
 
                 <Route exact path="/view" component={SubjectsList} />
                 <Route exact path="/view/:subject_id" component={SectionsList} />
@@ -150,6 +156,9 @@ export const IndexPage = () => {
 
                 <Route exact path="/material/:material_id" component={SingleMaterialView} />
                 <Route exact path="/material/:material_id/edit" component={EditMaterialForm} />
+
+                <Route exact path="/lesson/:lesson_id" component={null} />
+                <Route exact path="/lesson/:lesson_id/edit" component={null} />
 
                 <Route exact path="/edit/:subject_id" component={EditSubjectForm} />
                 <Route exact path="/edit/:subject_id/:section_id" component={EditSectionForm} />
