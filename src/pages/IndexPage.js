@@ -39,6 +39,7 @@ import {SingleMaterialView} from "../components/views/SingleMaterialView";
 import {EditSubjectForm} from "../components/forms/edit/EditSubjectForm";
 import {EditSectionForm} from "../components/forms/edit/EditSectionForm";
 import {EditMaterialForm} from "../components/forms/edit/EditMaterialForm";
+import {CreateLessonForm} from "../components/forms/create/CreateLessonForm";
 
 /*
  Главная страница с шапкой и сайдбаром.
@@ -147,7 +148,7 @@ export const IndexPage = () => {
                 <Route exact path="/new_subject" component={CreateSubjectForm} />
                 <Route exact path="/new_section" component={CreateSectionForm} />
                 <Route exact path="/new_material" component={CreateMaterialForm} />
-                <Route exact path="/new_lesson" component={null} />
+                <Route exact path="/new_lesson" component={CreateLessonForm} />
 
                 <Route exact path="/view" component={SubjectsList} />
                 <Route exact path="/view/:subject_id" component={SectionsList} />
@@ -158,6 +159,7 @@ export const IndexPage = () => {
                 <Route exact path="/material/:material_id/edit" component={EditMaterialForm} />
 
                 <Route exact path="/lesson/:lesson_id" component={null} />
+                <Route exact path="/lesson/:lesson_id/add_tasks" component={null} />
                 <Route exact path="/lesson/:lesson_id/edit" component={null} />
 
                 <Route exact path="/edit/:subject_id" component={EditSubjectForm} />

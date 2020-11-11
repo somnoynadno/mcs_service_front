@@ -23,9 +23,18 @@ export class LessonAPI {
         });
     }
 
-    CreateLesson() {
+    CreateLesson(name, additionalInfo, password, fromDate, dueDate, isVisible, lessonTypeID, subjectID) {
         return new Promise((resolve) => {
-            HTTP.axios.post(`/admin/lesson`, {})
+            HTTP.axios.post(`/admin/lesson`, {
+                name: name,
+                additional_info: additionalInfo,
+                password: password,
+                from_date: fromDate,
+                due_date: dueDate,
+                is_visible: isVisible,
+                lesson_type_id: lessonTypeID,
+                subject_id: subjectID
+            })
                 .then(response => {
                     resolve(response.data);
                 }).catch(function(error) {
@@ -34,9 +43,18 @@ export class LessonAPI {
         });
     }
 
-    UpdateLesson(id) {
+    UpdateLesson(id, name, additionalInfo, password, fromDate, dueDate, isVisible, lessonTypeID, subjectID) {
         return new Promise((resolve) => {
-            HTTP.axios.put(`/admin/lesson/${id}`, {})
+            HTTP.axios.put(`/admin/lesson/${id}`, {
+                name: name,
+                additional_info: additionalInfo,
+                password: password,
+                from_date: fromDate,
+                due_date: dueDate,
+                is_visible: isVisible,
+                lesson_type_id: lessonTypeID,
+                subject_id: subjectID
+            })
                 .then(response => {
                     resolve(response.data);
                 }).catch(function(error) {
