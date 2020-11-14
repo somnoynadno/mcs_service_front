@@ -1,2 +1,2 @@
 // адрес апишки
-export const apiAddress = 'http://localhost:9090/api';
+export const apiAddress = 'https://mcs.somnoynadno.ru/api';
