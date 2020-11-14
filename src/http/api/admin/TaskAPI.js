@@ -12,6 +12,17 @@ export class TaskAPI {
         })
     }
 
+    GetTasksBySubjectID(subjectID) {
+        return new Promise((resolve) => {
+            HTTP.axios.get(`/admin/tasks_by_subject/${subjectID}`)
+                .then(response => {
+                    resolve(response.data);
+                }).catch(function(error) {
+                    HTTP.handleError(error);
+            });
+        })
+    }
+
     GetTasksByTaskTypeID(taskTypeID) {
         return new Promise((resolve) => {
             HTTP.axios.get(`/admin/tasks_by_task_type/${taskTypeID}`)

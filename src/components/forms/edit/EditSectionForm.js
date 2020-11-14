@@ -21,6 +21,7 @@ export const EditSectionForm = (props) => {
     let [sectionID, setSectionID] = React.useState(null);
     let [name, setName] = React.useState('');
     let [description, setDescription] = React.useState('');
+    let [password, setPassword] = React.useState('');
     let [sectionTypeID, setSectionTypeID] = React.useState(null);
     let [subjectID, setSubjectID] = React.useState(null);
 
@@ -78,7 +79,7 @@ export const EditSectionForm = (props) => {
     const updateSection = async (event) => {
         event.preventDefault();
         const api = new SectionAPI();
-        await api.UpdateSection(sectionID, name, description, subjectID, sectionTypeID);
+        await api.UpdateSection(sectionID, name, description, password, subjectID, sectionTypeID);
         history.push(`/view/${subjectID}/${sectionID}`);
     }
 
@@ -131,6 +132,15 @@ export const EditSectionForm = (props) => {
                         id="description"
                         value={description}
                         onChange={event => setDescription(event.target.value)}
+                    />
+                    <br />
+                    <TextField
+                        required
+                        name="password"
+                        label="Кодовое слово"
+                        id="password"
+                        value={password}
+                        onChange={event => setPassword(event.target.value)}
                     />
                 </FormControl>
                 <br />

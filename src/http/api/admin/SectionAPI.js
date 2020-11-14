@@ -23,12 +23,13 @@ export class SectionAPI {
         });
     }
 
-    CreateSection(name, description, subjectID) {
+    CreateSection(name, description, password, subjectID) {
         return new Promise((resolve) => {
             HTTP.axios.post(`/admin/section`, {
                 name: name,
                 description: description,
                 subject_id: subjectID,
+                password: password,
                 section_type_id: 1, // suggestion by default
             })
                 .then(response => {
@@ -39,11 +40,12 @@ export class SectionAPI {
         });
     }
 
-    UpdateSection(id, name, description, subjectID, sectionTypeID) {
+    UpdateSection(id, name, description, password, subjectID, sectionTypeID) {
         return new Promise((resolve) => {
             HTTP.axios.put(`/admin/section/${id}`, {
                 name: name,
                 description: description,
+                password: password,
                 subject_id: subjectID,
                 section_type_id: sectionTypeID,
             })

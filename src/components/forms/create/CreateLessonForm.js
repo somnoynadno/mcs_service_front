@@ -58,7 +58,7 @@ export const CreateLessonForm = () => {
         let r = await api.CreateLesson(name, additionalInfo, password,
             fromDate, dueDate, isVisible, lessonTypeID, subjectID);
 
-        history.push(`/lesson/${r.id}/add_tasks`);
+        history.push({pathname: `/lesson/${r.id}/add_tasks`, state: {lesson: r}});
     }
 
     const handleFromDateChange = (date) => {

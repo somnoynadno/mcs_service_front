@@ -4,13 +4,19 @@ import history from "../../history";
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Link from "@material-ui/core/Link";
 import {LessonAPI} from "../../http/api/admin/LessonAPI";
 import moment from "moment";
+import {sortArrayByKey} from "../../helpers";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import LabelIcon from "@material-ui/icons/Label";
+import ListItemText from "@material-ui/core/ListItemText";
+import List from "@material-ui/core/List";
+import {DeleteDialog} from "../dialogs/DeleteDialog";
 
 
 export const SingleLessonView = (props) => {
@@ -36,6 +42,12 @@ export const SingleLessonView = (props) => {
         }
     }, [props]);
 
+    const deleteLesson = async () => {
+        const api = new LessonAPI();
+        await api.DeleteLesson(lesson.id);
+        history.push(`/view/${lesson.subject_id}`);
+    }
+
     if (lesson === null) return <CircularProgress />
     else return (
         <div className={classes.root}>
@@ -54,22 +66,41 @@ export const SingleLessonView = (props) => {
             <br />
             <Divider />
             <br />
+            <Typography variant="body2" color="textPrimary" component="p">
+                Начало: {moment(lesson["from_date"]).format('LLL')} <br />
+                Дедлайн: {moment(lesson["due_date"]).format('LLL')} <br />
+            </Typography>
+            <br />
+            <Typography variant="h6" component="h1">
+                Задачи
+            </Typography>
+            <List component="nav">
+                {lesson["tasks"] ?
+                    sortArrayByKey(lesson["tasks"], "task_type_id").map((t) => {
+                    return <ListItem button key={t.id}
+                                     onClick={() => history.push({
+                                             pathname: `/view/${lesson.subject_id}/${t.section_id}/${t.id}`
+                                         }
+                                     )}>
+                        <ListItemIcon>
+                            <LabelIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={t.name} />
+                    </ListItem>
+                })
+                    : <i>Список пуст</i>
+                }
+            </List>
+            <br />
+            <Divider />
+            <br />
             <Typography variant="body2" color="textSecondary" component="p">
                 Видимый: {lesson["is_visible"] ? "да" : "нет"} <br /><br />
                 Создано: {moment(lesson["created_at"]).format('LLL')} <br />
                 Обновлено: {moment(lesson["updated_at"]).format('LLL')} <br />
             </Typography>
-            <br />
-            <Button size="small" onClick={() =>
-                history.push({
-                    pathname: `/lesson/${lesson.id}/edit`,
-                    state: {
-                        lesson: lesson,
-                    },
-                })
-            }
-            >Редактировать
-            </Button>
+            <br /><br />
+            <DeleteDialog deleteCallback={() => deleteLesson()} />
         </div>
     );
 }

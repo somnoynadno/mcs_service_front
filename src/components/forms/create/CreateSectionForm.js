@@ -18,6 +18,7 @@ export const CreateSectionForm = () => {
 
     let [name, setName] = React.useState('');
     let [description, setDescription] = React.useState('');
+    let [password, setPassword] = React.useState('');
     let [subjectID, setSubjectID] = React.useState(null);
     let [subjects, setSubjects] = React.useState([]);
 
@@ -34,7 +35,7 @@ export const CreateSectionForm = () => {
     const createSection = async (event) => {
         event.preventDefault();
         const api = new SectionAPI();
-        let r = await api.CreateSection(name, description, subjectID);
+        let r = await api.CreateSection(name, description, password, subjectID);
         history.push(`/view/${subjectID}/${r.id}`);
     }
 
@@ -81,6 +82,15 @@ export const CreateSectionForm = () => {
                     id="description"
                     value={description}
                     onChange={event => setDescription(event.target.value)}
+                />
+                <br />
+                <TextField
+                    required
+                    name="password"
+                    label="Кодовое слово"
+                    id="password"
+                    value={password}
+                    onChange={event => setPassword(event.target.value)}
                 />
                 </FormControl>
                 <br />

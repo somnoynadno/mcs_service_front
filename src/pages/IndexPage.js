@@ -41,6 +41,7 @@ import {EditSectionForm} from "../components/forms/edit/EditSectionForm";
 import {EditMaterialForm} from "../components/forms/edit/EditMaterialForm";
 import {CreateLessonForm} from "../components/forms/create/CreateLessonForm";
 import {SingleLessonView} from "../components/views/SingleLessonView";
+import {AddTasksToLessonForm} from "../components/forms/add/AddTasksToLessonForm";
 
 /*
  Главная страница с шапкой и сайдбаром.
@@ -160,7 +161,7 @@ export const IndexPage = () => {
                 <Route exact path="/material/:material_id/edit" component={EditMaterialForm} />
 
                 <Route exact path="/lesson/:lesson_id" component={SingleLessonView} />
-                <Route exact path="/lesson/:lesson_id/add_tasks" component={null} />
+                <Route exact path="/lesson/:lesson_id/add_tasks" component={AddTasksToLessonForm} />
                 <Route exact path="/lesson/:lesson_id/edit" component={null} />
 
                 <Route exact path="/edit/:subject_id" component={EditSubjectForm} />
