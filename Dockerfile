@@ -1,9 +1,8 @@
 # Stage 1 - the build process
-FROM node:carbon-alpine as builder
-LABEL maintainer="Alexander Zorkin"
+FROM node:14.15.0-alpine3.12 as builder
 
 WORKDIR /app
-COPY package.json ./
+COPY package.json package-lock.json ./
 
 RUN npm install --production
 
@@ -11,7 +10,7 @@ COPY . ./
 RUN npm run build
 
 # Stage 2 - release
-FROM node:8.9-alpine AS release
+FROM node:14.15.0-alpine3.12 AS release
 
 WORKDIR /app
 COPY --from=builder /app/build ./build
